@@ -1,11 +1,23 @@
 plugins {
     id 'com.android.application'
-    id 'checkstyle'
+
+/* ADDED for instrumentation begin */
+id 'jacoco'
+/* ADDED for instrumentation end */
+            id 'checkstyle'
     id 'com.github.triplet.play' version '2.3.0'
     id 'io.fabric'
     id 'jacoco-android'
 }
 
+/* ADDED for instrumentation begin */
+
+jacoco {
+toolVersion = "0.8.2"
+}
+
+/* ADDED for instrumentation end */
+    
 check.dependsOn 'checkstyle'
 
 task checkstyle(type: Checkstyle) {
@@ -101,6 +113,10 @@ android {
                 signingConfig signingConfigs.release
         }
         debug {
+
+/* ADDED test coverage enabled for instrumentation begin */
+            testCoverageEnabled = true
+/* ADDED test coverage enabled for instrumentation end */
             applicationIdSuffix '.debug'
             resValue "string", "application_id", defaultConfig.applicationId + '.debug'
             resValue "string", "account_type", defaultConfig.applicationId + '.debug.account'
